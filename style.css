@@ -17,6 +17,7 @@ main {
   height: 90hv;
   width: 90vh;
   display: inline;
+  position: relative;
 }
 
 .row {
@@ -57,4 +58,25 @@ main {
   transform: rotateY(0);
   background-color: rgb(249, 241, 241);
   font-size: 12px;
+}
+
+.overlay {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background: #0057e3bc;
+  z-index: 9;
+  margin: 30px 25%;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+.hide {
+  opacity: 0;
 }

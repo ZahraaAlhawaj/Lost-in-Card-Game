@@ -13,6 +13,7 @@ const cards = document.querySelectorAll('.cards')
 const scoreDisplay = document.querySelector('#score')
 const level = document.querySelector('#level')
 const time = document.querySelector('#time')
+const cardOverlay = document.querySelector('.overlay')
 
 const questionsAndAnswers = [
   {
@@ -112,10 +113,48 @@ const questionsAndAnswers = [
     color: 'purple'
   }
 ]
+//here shuffle function that will return a an array with random
+const shuffle = (arr) => {
+  //it will take the length of the array (combinedarray) and save it in a variable = 16
+  let crntIndex = arr.length
+  let tempValue, randomIndex
+
+  //since the length of array does not equal to zero
+  //it will generate random index and save it to tempValue
+  //then
+  while (crntIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * crntIndex)
+    crntIndex--
+
+    tempValue = arr[crntIndex] //tempvalue = arr[15]
+    arr[crntIndex] = arr[randomIndex] //arr[15] = arr[5]
+    arr[randomIndex] = tempValue //arr[5] =
+  }
+  return arr
+}
+//first it will duplicated the questionsandanswers array and save it in combinedarray
+const combinedArray = [...questionsAndAnswers, ...questionsAndAnswers]
+shuffle(combinedArray)
+
+for (let i = 0; i < combinedArray.length; i++) {
+  if (Math.random() < 0.5) {
+    //question
+    const qsnOneText = combinedArray[i].qsnOne
+    const ansOneText = combinedArray[i].qsnOneAnswer
+    qOne[i].innerText = qsnOneText
+    aOne[i].innerText = ansOneText
+    aOne[i].style.color = combinedArray[i].qsnOneColor
+  } else {
+    //answer
+    const ans = combinedArray[i].answer
+    finalAnswer[i].innerText = ans
+    finalAnswer[i].style.color = combinedArray[i].color
+  }
+}
 
 // if (Math.random() < 0.5) : what i should have
 //if (i < cards.length / 2) : previous condition
-for (let i = 0; i < cards.length; i++) {
+/* for (let i = 0; i < cards.length; i++) {
   if (i < cards.length / 2) {
     const qsnOneText = questionsAndAnswers[i].qsnOne
     const ansOneText = questionsAndAnswers[i].qsnOneAnswer
@@ -126,9 +165,9 @@ for (let i = 0; i < cards.length; i++) {
     const ans = questionsAndAnswers[i - Math.ceil(cards.length / 2)].answer
     finalAnswer[i].innerText = ans
     finalAnswer[i].style.color =
-      questionsAndAnswers[i - Math.ceil(cards.length / 2)].color
+    questionsAndAnswers[i - Math.ceil(cards.length / 2)].color
   }
-}
+} */
 
 //functions
 
@@ -234,6 +273,7 @@ const matching = (opencards, openCardStyle, matchingCards) => {
       time.innerText = gameTime
       clearInterval(timer)
       startTimer = false
+      startTime()
       //cards[i].style.opacity = 0
     }
   }
@@ -258,6 +298,8 @@ const countdown = () => {
     time.innerText = gameTime
     console.log('Game over')
     clearInterval(timer)
+    //cardOverlay.style.opacity = 1
+    //cardOverlay.classList.remove('hide')
   } else {
     time.innerText = gameTime
     gameTime--
