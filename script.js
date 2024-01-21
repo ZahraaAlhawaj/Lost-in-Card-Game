@@ -113,8 +113,8 @@ const questionsAndAnswers = [
   }
 ]
 
-//generate the cards with questions and answers
 // if (Math.random() < 0.5) : what i should have
+//if (i < cards.length / 2) : previous condition
 for (let i = 0; i < cards.length; i++) {
   if (i < cards.length / 2) {
     const qsnOneText = questionsAndAnswers[i].qsnOne
@@ -136,6 +136,18 @@ let opencards = []
 let openCardStyle = []
 let matchingCards = []
 let colorOfLastWord = ''
+
+const closeCard = (i) => {
+  //for (let i = 0; i < cards.length; i++) {
+  cards[i].classList.remove('open')
+  console.log('count', countOpenCard)
+  opencards = []
+  openCardStyle = []
+  matchingCards = []
+  //}
+  countOpenCard = 0
+  console.log('coun open: ', countOpenCard)
+}
 
 const openCard = (i) => {
   cards[i].classList.add('open')
@@ -189,11 +201,6 @@ const openCard = (i) => {
 }
 
 const matching = (opencards, openCardStyle, matchingCards) => {
-  //console.log('access')
-  //console.log('accesses cards details', opencards)
-  /* console.log('access card style details:', openCardStyle)
-  console.log('matching cards here: ', matchingCards) */
-
   for (let i = 0; i < questionsAndAnswers.length; i++) {
     if (
       (openCardStyle[0] === questionsAndAnswers[i].qsnOneColor ||
@@ -257,15 +264,58 @@ const countdown = () => {
   }
 }
 
-//addEventListene
+//addEventListener
 
+/* for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('mouseover', () => {
+    cards[i].style.backgroundColor = 'black'
+  })
+}
+
+for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('mouseout', () => {
+    cards[i].style.backgroundColor = '#2e3d49'
+  })
+}
+ */
+let clicked = false
+let clickedArray = Array(16).fill(false)
+let clickedTrueCount = 0
+console.log('clickedArray:', clickedArray)
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
     console.log('clicked')
     count++
-    openCard(i)
-    //startTime()
-    //if(count == 3){  }
-    //resetTime()
+    startTime()
+    //clicked = true
+    console.log('before if:', clicked)
+    // if (i || i == 0) {
+    console.log('after if:', clicked)
+    if (clickedArray[i] == true) {
+      clickedArray[i] = false
+      closeCard(i)
+    } else {
+      for (let j = 0; j < clickedArray.length; j++) {
+        if (clickedArray[j] == true) {
+          clickedTrueCount++
+        }
+      }
+
+      if (clickedTrueCount == 3 || clickedTrueCount > 3) {
+        for (let k = 0; k < cards.length; k++) {
+          closeCard(k)
+          clickedArray[k] = false
+        }
+        clickedTrueCount = 0
+      } else {
+        console.log('true count is: ', clickedTrueCount)
+        clickedArray[i] = true
+        openCard(i)
+      }
+
+      console.log('please', clickedArray[i])
+      // }
+      console.log('clicked array after:', clickedArray)
+    }
   })
 }
