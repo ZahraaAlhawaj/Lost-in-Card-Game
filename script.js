@@ -223,9 +223,37 @@ const matching = (opencards, openCardStyle, matchingCards) => {
       matchingCards = []
 
       //here the time should return to 30 sec
-
+      gameTime = 30
+      time.innerText = gameTime
+      clearInterval(timer)
+      startTimer = false
       //cards[i].style.opacity = 0
     }
+  }
+}
+
+const removeCards = () => {
+  matchingCards[0].remove()
+  matchingCards[1].remove()
+}
+
+const startTime = () => {
+  if (startTimer == false) {
+    timer = setInterval(countdown, 1000)
+    startTimer = true
+  } else {
+    console.log('already timer is start')
+  }
+}
+
+const countdown = () => {
+  if (gameTime == 0) {
+    time.innerText = gameTime
+    console.log('Game over')
+    clearInterval(timer)
+  } else {
+    time.innerText = gameTime
+    gameTime--
   }
 }
 
