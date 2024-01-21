@@ -112,3 +112,20 @@ const questionsAndAnswers = [
     color: 'purple'
   }
 ]
+
+//generate the cards with questions and answers
+// if (Math.random() < 0.5) : what i should have
+for (let i = 0; i < cards.length; i++) {
+  if (i < cards.length / 2) {
+    const qsnOneText = questionsAndAnswers[i].qsnOne
+    const ansOneText = questionsAndAnswers[i].qsnOneAnswer
+    qOne[i].innerText = qsnOneText
+    aOne[i].innerText = ansOneText
+    aOne[i].style.color = questionsAndAnswers[i].qsnOneColor
+  } else {
+    const ans = questionsAndAnswers[i - Math.ceil(cards.length / 2)].answer
+    finalAnswer[i].innerText = ans
+    finalAnswer[i].style.color =
+      questionsAndAnswers[i - Math.ceil(cards.length / 2)].color
+  }
+}
