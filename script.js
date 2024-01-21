@@ -182,10 +182,51 @@ const openCard = (i) => {
       openCardStyle.length == 2 &&
       matchingCards.length == 2
     ) {
-      //matching(opencards, openCardStyle, matchingCards)
+      matching(opencards, openCardStyle, matchingCards)
     }
   }
   //cards[i].classList.toggle('flipCard')
+}
+
+const matching = (opencards, openCardStyle, matchingCards) => {
+  //console.log('access')
+  //console.log('accesses cards details', opencards)
+  /* console.log('access card style details:', openCardStyle)
+  console.log('matching cards here: ', matchingCards) */
+
+  for (let i = 0; i < questionsAndAnswers.length; i++) {
+    if (
+      (openCardStyle[0] === questionsAndAnswers[i].qsnOneColor ||
+        openCardStyle[0] === questionsAndAnswers[i].color) &&
+      (opencards[0] ===
+        questionsAndAnswers[i].qsnOne + questionsAndAnswers[i].qsnOneAnswer ||
+        opencards[0] === questionsAndAnswers[i].answer) &&
+      (opencards[1] === questionsAndAnswers[i].answer ||
+        opencards[1] ===
+          questionsAndAnswers[i].qsnOne +
+            questionsAndAnswers[i].qsnOneAnswer) &&
+      (openCardStyle[1] === questionsAndAnswers[i].color ||
+        openCardStyle[1] === questionsAndAnswers[i].qsnOneColor) &&
+      opencards[0] !== opencards[1]
+    ) {
+      console.log('great match')
+      score += 10
+      scoreDisplay.innerText = score
+      // bad solution
+      //matchingCards[0].style.opacity = 0
+      //matchingCards[1].style.opacity = 0
+
+      setTimeout(removeCards, 1000)
+
+      opencards = []
+      openCardStyle = []
+      matchingCards = []
+
+      //here the time should return to 30 sec
+
+      //cards[i].style.opacity = 0
+    }
+  }
 }
 
 //addEventListene
