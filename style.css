@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+h1 {
+  text-align: center;
+}
+
+main {
+  background-color: red;
+  height: 90hv;
+  width: 90vh;
+  display: inline;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.card {
+  margin: 10px;
+  background-color: #2e3d49;
+  font-size: 0;
+  width: 110px;
+  height: 110px;
+  border: 1px solid black;
+  border-radius: 15px;
+  opacity: 1;
+  /*position: relative;
+  transition: all 0.8s ease;
+  transform-style: preserve-3d;*/
+}
+
+.front {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.back {
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+.flipCard {
+  transform: rotateY(180deg);
+}
+
+.open {
+  transform: rotateY(0);
+  background-color: rgb(249, 241, 241);
+  font-size: 12px;
+}
