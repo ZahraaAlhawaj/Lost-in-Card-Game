@@ -132,13 +132,69 @@ for (let i = 0; i < cards.length; i++) {
 
 //functions
 
+let opencards = []
+let openCardStyle = []
+let matchingCards = []
+let colorOfLastWord = ''
+
+const openCard = (i) => {
+  cards[i].classList.add('open')
+  console.log('openCard')
+  if (countOpenCard === 2) {
+    for (let i = 0; i < cards.length; i++) {
+      cards[i].classList.remove('open')
+      console.log('count', countOpenCard)
+      opencards = []
+      openCardStyle = []
+      matchingCards = []
+    }
+    countOpenCard = 0
+    console.log('coun open: ', countOpenCard)
+  } else {
+    countOpenCard++
+    opencards.push(cards[i].innerText)
+    matchingCards.push(cards[i])
+
+    //to find the last word
+    const cardText = cards[i].innerText
+    const words = cardText.split(' ')
+    const lastWord = words[words.length - 1]
+    console.log('last word: ', lastWord)
+
+    console.log('please: ', aOne[i].style.color) //it will find for me for question
+    console.log('please number 2 for answer: ', finalAnswer[i].style.color)
+
+    //to find the color of last word
+
+    if (lastWord === aOne[i].innerText) {
+      console.log('same: ', aOne[i].innerText)
+      openCardStyle.push(aOne[i].style.color) //the color of Q
+    }
+    if (lastWord === finalAnswer[i].innerText) {
+      openCardStyle.push(finalAnswer[i].style.color)
+    }
+
+    console.log('style: ', openCardStyle)
+
+    console.log('details of card: ', opencards)
+    if (
+      opencards.length == 2 &&
+      openCardStyle.length == 2 &&
+      matchingCards.length == 2
+    ) {
+      //matching(opencards, openCardStyle, matchingCards)
+    }
+  }
+  //cards[i].classList.toggle('flipCard')
+}
+
 //addEventListene
 
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
     console.log('clicked')
     count++
-    //openCard(i)
+    openCard(i)
     //startTime()
     //if(count == 3){  }
     //resetTime()
