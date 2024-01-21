@@ -129,3 +129,18 @@ for (let i = 0; i < cards.length; i++) {
       questionsAndAnswers[i - Math.ceil(cards.length / 2)].color
   }
 }
+
+//functions
+
+//addEventListene
+
+for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('click', () => {
+    console.log('clicked')
+    count++
+    //openCard(i)
+    //startTime()
+    //if(count == 3){  }
+    //resetTime()
+  })
+}
