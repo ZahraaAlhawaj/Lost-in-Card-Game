@@ -18,6 +18,7 @@ const time = document.querySelector('#time')
 //const cardOverlay = document.querySelector('.overlay')
 const gameStatus = document.querySelector('#gameStatus')
 const gameStatusWin = document.querySelector('#gameStatusWin')
+const again = document.querySelector('.again')
 
 const questionsAndAnswers = [
   {
@@ -372,13 +373,3 @@ for (let i = 0; i < cards.length; i++) {
     }
   })
 }
-
-console.log('rards', cards)
-
-const startGame = () => {
-  if (!cards) {
-    console.log('no cards here')
-  }
-}
-
-startGame()
