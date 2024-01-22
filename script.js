@@ -4,6 +4,7 @@ let countOpenCard = 0
 let score = 0
 let startTimer = false
 let timer
+let gameOver = false
 
 const qOne = document.querySelectorAll('.qOne')
 const aOne = document.querySelectorAll('.aOne')
@@ -13,7 +14,8 @@ const cards = document.querySelectorAll('.cards')
 const scoreDisplay = document.querySelector('#score')
 const level = document.querySelector('#level')
 const time = document.querySelector('#time')
-const cardOverlay = document.querySelector('.overlay')
+//const cardOverlay = document.querySelector('.overlay')
+const gameStatus = document.querySelector('#gameStatus')
 
 const questionsAndAnswers = [
   {
@@ -298,8 +300,8 @@ const countdown = () => {
     time.innerText = gameTime
     console.log('Game over')
     clearInterval(timer)
-    //cardOverlay.style.opacity = 1
-    //cardOverlay.classList.remove('hide')
+    gameStatus.style.display = 'block'
+    gameOver = true
   } else {
     time.innerText = gameTime
     gameTime--
@@ -328,6 +330,9 @@ for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
     console.log('clicked')
     count++
+    if (gameOver) {
+      return
+    }
     startTime()
     //clicked = true
     console.log('before if:', clicked)
