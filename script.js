@@ -1,4 +1,4 @@
-let gameTime = 30
+let gameTime = 120
 let count = 0
 let countOpenCard = 0
 let score = 0
@@ -10,12 +10,14 @@ const qOne = document.querySelectorAll('.qOne')
 const aOne = document.querySelectorAll('.aOne')
 const finalAnswer = document.querySelectorAll('.ansOne')
 const cards = document.querySelectorAll('.cards')
+const cardsText = document.querySelectorAll('.text')
 
 const scoreDisplay = document.querySelector('#score')
 const level = document.querySelector('#level')
 const time = document.querySelector('#time')
 //const cardOverlay = document.querySelector('.overlay')
 const gameStatus = document.querySelector('#gameStatus')
+const gameStatusWin = document.querySelector('#gameStatusWin')
 
 const questionsAndAnswers = [
   {
@@ -115,42 +117,39 @@ const questionsAndAnswers = [
     color: 'purple'
   }
 ]
-//here shuffle function that will return a an array with random
-const shuffle = (arr) => {
-  //it will take the length of the array (combinedarray) and save it in a variable = 16
-  let crntIndex = arr.length
-  let tempValue, randomIndex
 
-  //since the length of array does not equal to zero
-  //it will generate random index and save it to tempValue
-  //then
-  while (crntIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * crntIndex)
-    crntIndex--
+let questionCount = 0
+let answerCount = 0
 
-    tempValue = arr[crntIndex] //tempvalue = arr[15]
-    arr[crntIndex] = arr[randomIndex] //arr[15] = arr[5]
-    arr[randomIndex] = tempValue //arr[5] =
-  }
-  return arr
-}
-//first it will duplicated the questionsandanswers array and save it in combinedarray
-const combinedArray = [...questionsAndAnswers, ...questionsAndAnswers]
-shuffle(combinedArray)
-
-for (let i = 0; i < combinedArray.length; i++) {
-  if (Math.random() < 0.5) {
+for (let i = 0; i < cards.length; i++) {
+  if (Math.random() < 0.5 && questionCount < 8) {
     //question
-    const qsnOneText = combinedArray[i].qsnOne
-    const ansOneText = combinedArray[i].qsnOneAnswer
+    const qsnOneText = questionsAndAnswers[questionCount].qsnOne
+    const ansOneText = questionsAndAnswers[questionCount].qsnOneAnswer
     qOne[i].innerText = qsnOneText
     aOne[i].innerText = ansOneText
-    aOne[i].style.color = combinedArray[i].qsnOneColor
-  } else {
+    aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
+    questionCount++
+  } else if (answerCount < 8) {
     //answer
-    const ans = combinedArray[i].answer
+    const ans = questionsAndAnswers[answerCount].answer
     finalAnswer[i].innerText = ans
-    finalAnswer[i].style.color = combinedArray[i].color
+    finalAnswer[i].style.color = questionsAndAnswers[answerCount].color
+    answerCount++
+  } else {
+    if (questionCount < 8) {
+      const qsnOneText = questionsAndAnswers[questionCount].qsnOne
+      const ansOneText = questionsAndAnswers[questionCount].qsnOneAnswer
+      qOne[i].innerText = qsnOneText
+      aOne[i].innerText = ansOneText
+      aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
+      questionCount++
+    } else {
+      const ans = questionsAndAnswers[answerCount].answer
+      finalAnswer[i].innerText = ans
+      finalAnswer[i].style.color = questionsAndAnswers[answerCount].color
+      answerCount++
+    }
   }
 }
 
@@ -187,12 +186,10 @@ const closeCard = (i) => {
   matchingCards = []
   //}
   countOpenCard = 0
-  console.log('coun open: ', countOpenCard)
 }
 
 const openCard = (i) => {
   cards[i].classList.add('open')
-  console.log('openCard')
   if (countOpenCard === 2) {
     for (let i = 0; i < cards.length; i++) {
       cards[i].classList.remove('open')
@@ -213,9 +210,6 @@ const openCard = (i) => {
     const words = cardText.split(' ')
     const lastWord = words[words.length - 1]
     console.log('last word: ', lastWord)
-
-    console.log('please: ', aOne[i].style.color) //it will find for me for question
-    console.log('please number 2 for answer: ', finalAnswer[i].style.color)
 
     //to find the color of last word
 
@@ -270,8 +264,8 @@ const matching = (opencards, openCardStyle, matchingCards) => {
       openCardStyle = []
       matchingCards = []
 
-      //here the time should return to 30 sec
-      gameTime = 30
+      //here the time should return to 120 sec
+      gameTime = 120
       time.innerText = gameTime
       clearInterval(timer)
       startTimer = false
@@ -281,10 +275,21 @@ const matching = (opencards, openCardStyle, matchingCards) => {
   }
 }
 
+let numberMatchCards = 0
+
 const removeCards = () => {
   matchingCards[0].remove()
   matchingCards[1].remove()
+  numberMatchCards++
+  if (numberMatchCards == 8) {
+    console.log('hello, 8 matches found')
+    clearInterval(timer)
+    gameStatusWin.style.display = 'block'
+  }
 }
+
+//create function to check if all cards removed or not
+const checkExistCards = () => {}
 
 const startTime = () => {
   if (startTimer == false) {
@@ -326,13 +331,14 @@ let clicked = false
 let clickedArray = Array(16).fill(false)
 let clickedTrueCount = 0
 console.log('clickedArray:', clickedArray)
+
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
-    console.log('clicked')
     count++
     if (gameOver) {
       return
     }
+
     startTime()
     //clicked = true
     console.log('before if:', clicked)
@@ -366,3 +372,13 @@ for (let i = 0; i < cards.length; i++) {
     }
   })
 }
+
+console.log('rards', cards)
+
+const startGame = () => {
+  if (!cards) {
+    console.log('no cards here')
+  }
+}
+
+startGame()
