@@ -19,7 +19,6 @@ const cardsText = document.querySelectorAll('.text')
 const scoreDisplay = document.querySelector('#score')
 const level = document.querySelector('#level')
 const time = document.querySelector('#time')
-//const cardOverlay = document.querySelector('.overlay')
 const gameStatus = document.querySelector('#gameStatus')
 const gameStatusWin = document.querySelector('#gameStatusWin')
 const again = document.querySelector('.again')
@@ -135,7 +134,7 @@ for (let i = 0; i < cards.length; i++) {
     aOne[i].innerText = ansOneText
     aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
 
-    qTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwo
+    qTwo[i].innerText = '-' + questionsAndAnswers[questionCount].qsnTwo
     aTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwoAnswer
     aTwo[i].style.color = questionsAndAnswers[questionCount].qsnTwoColor
     questionCount++
@@ -153,7 +152,7 @@ for (let i = 0; i < cards.length; i++) {
       aOne[i].innerText = ansOneText
       aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
 
-      qTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwo
+      qTwo[i].innerText = '-' + questionsAndAnswers[questionCount].qsnTwo
       aTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwoAnswer
       aTwo[i].style.color = questionsAndAnswers[questionCount].qsnTwoColor
 
@@ -167,37 +166,27 @@ for (let i = 0; i < cards.length; i++) {
   }
 }
 
-// if (Math.random() < 0.5) : what i should have
-//if (i < cards.length / 2) : previous condition
-/* for (let i = 0; i < cards.length; i++) {
-  if (i < cards.length / 2) {
-    const qsnOneText = questionsAndAnswers[i].qsnOne
-    const ansOneText = questionsAndAnswers[i].qsnOneAnswer
-    qOne[i].innerText = qsnOneText
-    aOne[i].innerText = ansOneText
-    aOne[i].style.color = questionsAndAnswers[i].qsnOneColor
-  } else {
-    const ans = questionsAndAnswers[i - Math.ceil(cards.length / 2)].answer
-    finalAnswer[i].innerText = ans
-    finalAnswer[i].style.color =
-    questionsAndAnswers[i - Math.ceil(cards.length / 2)].color
-  }
-} */
-
 //functions
 
 let opencards = []
 let openCardStyle = []
+let openQCardStyle = []
+let openACardStyle = []
 let matchingCards = []
 let colorOfLastWord = ''
+let lastWordQOne
+let lastWordQTwo
+let answerStyle
 
 const closeCard = (i) => {
   //for (let i = 0; i < cards.length; i++) {
   cards[i].classList.remove('open')
   console.log('count', countOpenCard)
   opencards = []
-  openCardStyle = []
+  //openCardStyle = []
   matchingCards = []
+  openACardStyle = []
+  openQCardStyle = []
   //}
   countOpenCard = 0
 }
@@ -209,74 +198,108 @@ const openCard = (i) => {
       cards[i].classList.remove('open')
       console.log('count', countOpenCard)
       opencards = []
-      openCardStyle = []
+      //openCardStyle = []
+      // i have do
+      openACardStyle = []
+      openQCardStyle = []
+
       matchingCards = []
     }
     countOpenCard = 0
-    console.log('coun open: ', countOpenCard)
   } else {
     countOpenCard++
     opencards.push(cards[i].innerText)
     matchingCards.push(cards[i])
-    console.log('open cards are: ', opencards)
 
-    //to find the last word
-    const cardText = cards[i].innerText
-    const words = cardText.split(' ')
-    const lastWord = words[words.length - 1]
-    console.log('last word: ', lastWord)
+    //the qsns
+    //it is for question
+    if (cards[i].innerText.length > 10) {
+      const questionsArray = cards[i].innerText.split('-')
 
-    //to find the color of last word
+      if (questionsArray.length == 2) {
+        const questionOne = questionsArray[0]
+        const questionTwo = questionsArray[1]
 
-    if (lastWord === aOne[i].innerText) {
-      console.log('same: ', aOne[i].innerText)
-      openCardStyle.push(aOne[i].style.color) //the color of Q
+        const wordOne = questionOne.split(' ')
+        lastWordQOne = wordOne[wordOne.length - 2]
+
+        const wordTwo = questionTwo.split(' ')
+        lastWordQTwo = wordTwo[wordTwo.length - 1]
+      }
+
+      //to find the color of last word in first question:
+      if (lastWordQOne === aOne[i].innerText) {
+        openQCardStyle.push(aOne[i].style.color)
+      }
+
+      if (lastWordQTwo === aTwo[i].innerText) {
+        openQCardStyle.push(aTwo[i].style.color)
+      }
+
+      console.log('style of Q1&Q2', openQCardStyle)
     }
-    if (lastWord === finalAnswer[i].innerText) {
-      openCardStyle.push(finalAnswer[i].style.color)
+
+    //it is for answer
+    else {
+      const cardAnswer = cards[i].innerText
+
+      //to find the color of the card answer'
+
+      if (
+        cardAnswer.replace(/\s/, '') ===
+        finalAnswer[i].innerText.replace(/\s/, '')
+      ) {
+        openACardStyle.push(finalAnswer[i].style.color)
+      }
     }
 
-    console.log('style: ', openCardStyle)
-
-    console.log('details of card: ', opencards)
     if (
-      opencards.length == 2 &&
-      openCardStyle.length == 2 &&
-      matchingCards.length == 2
+      (opencards.length == 2 &&
+        openQCardStyle.length == 2 &&
+        openACardStyle.length == 1,
+      matchingCards.length == 2)
     ) {
-      matching(opencards, openCardStyle, matchingCards)
+      matching(opencards, openQCardStyle, openACardStyle, matchingCards)
     }
   }
-  //cards[i].classList.toggle('flipCard')
 }
 
-const matching = (opencards, openCardStyle, matchingCards) => {
+const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
   for (let i = 0; i < questionsAndAnswers.length; i++) {
     if (
-      (openCardStyle[0] === questionsAndAnswers[i].qsnOneColor ||
-        openCardStyle[0] === questionsAndAnswers[i].color) &&
       (opencards[0] ===
-        questionsAndAnswers[i].qsnOne + questionsAndAnswers[i].qsnOneAnswer ||
-        opencards[0] === questionsAndAnswers[i].answer) &&
-      (opencards[1] === questionsAndAnswers[i].answer ||
+        questionsAndAnswers[i].qsnOne +
+          questionsAndAnswers[i].qsnOneAnswer +
+          ' -' +
+          questionsAndAnswers[i].qsnTwo +
+          questionsAndAnswers[i].qsnTwoAnswer &&
+        openQCardStyle[0] === questionsAndAnswers[i].qsnOneColor &&
+        openQCardStyle[1] === questionsAndAnswers[i].qsnTwoColor &&
+        opencards[1].replace(/\s/, '') === questionsAndAnswers[i].answer &&
+        openACardStyle[0] === questionsAndAnswers[i].color) ||
+      (opencards[0] === questionsAndAnswers[i].answer &&
+        openACardStyle[0] === questionsAndAnswers[i].color &&
         opencards[1] ===
           questionsAndAnswers[i].qsnOne +
-            questionsAndAnswers[i].qsnOneAnswer) &&
-      (openCardStyle[1] === questionsAndAnswers[i].color ||
-        openCardStyle[1] === questionsAndAnswers[i].qsnOneColor) &&
-      opencards[0] !== opencards[1]
+            questionsAndAnswers[i].qsnOneAnswer +
+            ' -' +
+            questionsAndAnswers[i].qsnTwo +
+            questionsAndAnswers[i].qsnTwoAnswer &&
+        openQCardStyle[0] === questionsAndAnswers[i].qsnOneColor &&
+        openQCardStyle[1] === questionsAndAnswers[i].qsnTwoColor)
     ) {
+      console.log('pleaseeeeeeeeeeeeeeeeeeeeeeeeeee')
+
       console.log('great match')
       score += 10
       scoreDisplay.innerText = score
-      // bad solution
-      //matchingCards[0].style.opacity = 0
-      //matchingCards[1].style.opacity = 0
 
       setTimeout(removeCards, 1000)
 
       opencards = []
-      openCardStyle = []
+      //openCardStyle = []
+      openACardStyle = []
+      openQCardStyle = []
       matchingCards = []
 
       //here the time should return to 60 sec
@@ -303,9 +326,6 @@ const removeCards = () => {
     gameStatusWin.style.display = 'block'
   }
 }
-
-//create function to check if all cards removed or not
-const checkExistCards = () => {}
 
 const startTime = () => {
   if (startTimer == false) {
@@ -341,12 +361,11 @@ for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('mouseout', () => {
     cards[i].style.backgroundColor = '#2e3d49'
   })
-}
- */
+} */
+
 let clicked = false
 let clickedArray = Array(16).fill(false)
 let clickedTrueCount = 0
-console.log('clickedArray:', clickedArray)
 
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
@@ -356,10 +375,6 @@ for (let i = 0; i < cards.length; i++) {
     }
 
     startTime()
-    //clicked = true
-    console.log('before if:', clicked)
-    // if (i || i == 0) {
-    console.log('after if:', clicked)
     if (clickedArray[i] == true) {
       clickedArray[i] = false
       closeCard(i)
@@ -377,14 +392,9 @@ for (let i = 0; i < cards.length; i++) {
         }
         clickedTrueCount = 0
       } else {
-        console.log('true count is: ', clickedTrueCount)
         clickedArray[i] = true
         openCard(i)
       }
-
-      console.log('please', clickedArray[i])
-      // }
-      console.log('clicked array after:', clickedArray)
     }
   })
 }
