@@ -1,4 +1,4 @@
-let gameTime = 30
+let gameTime = 60
 let count = 0
 let countOpenCard = 0
 let score = 0
@@ -134,6 +134,10 @@ for (let i = 0; i < cards.length; i++) {
     qOne[i].innerText = qsnOneText
     aOne[i].innerText = ansOneText
     aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
+
+    qTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwo
+    aTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwoAnswer
+    aTwo[i].style.color = questionsAndAnswers[questionCount].qsnTwoColor
     questionCount++
   } else if (answerCount < 8) {
     //answer
@@ -148,6 +152,11 @@ for (let i = 0; i < cards.length; i++) {
       qOne[i].innerText = qsnOneText
       aOne[i].innerText = ansOneText
       aOne[i].style.color = questionsAndAnswers[questionCount].qsnOneColor
+
+      qTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwo
+      aTwo[i].innerText = questionsAndAnswers[questionCount].qsnTwoAnswer
+      aTwo[i].style.color = questionsAndAnswers[questionCount].qsnTwoColor
+
       questionCount++
     } else {
       const ans = questionsAndAnswers[answerCount].answer
@@ -209,6 +218,7 @@ const openCard = (i) => {
     countOpenCard++
     opencards.push(cards[i].innerText)
     matchingCards.push(cards[i])
+    console.log('open cards are: ', opencards)
 
     //to find the last word
     const cardText = cards[i].innerText
@@ -269,12 +279,14 @@ const matching = (opencards, openCardStyle, matchingCards) => {
       openCardStyle = []
       matchingCards = []
 
-      //here the time should return to 30 sec
-      gameTime = 30
+      //here the time should return to 60 sec
+      gameTime = 60
       time.innerText = gameTime
       clearInterval(timer)
       startTimer = false
       startTime()
+    } else {
+      console.log('does not match')
     }
   }
 }
