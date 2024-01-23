@@ -277,7 +277,7 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
         openQCardStyle[1] === questionsAndAnswers[i].qsnTwoColor &&
         opencards[1].replace(/\s/, '') === questionsAndAnswers[i].answer &&
         openACardStyle[0] === questionsAndAnswers[i].color) ||
-      (opencards[0] === questionsAndAnswers[i].answer &&
+      (opencards[0].replace(/\s/, '') === questionsAndAnswers[i].answer &&
         openACardStyle[0] === questionsAndAnswers[i].color &&
         opencards[1] ===
           questionsAndAnswers[i].qsnOne +
@@ -294,7 +294,7 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
       score += 10
       scoreDisplay.innerText = score
 
-      setTimeout(removeCards, 1000)
+      setTimeout(removeCards, 500)
 
       opencards = []
       //openCardStyle = []
@@ -351,17 +351,23 @@ const countdown = () => {
 
 //addEventListener
 
-/* for (let i = 0; i < cards.length; i++) {
+for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('mouseover', () => {
     cards[i].style.backgroundColor = 'black'
+    if (cards[i].classList.contains('open')) {
+      cards[i].style.backgroundColor = 'rgb(249, 241, 241)'
+    }
   })
 }
 
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('mouseout', () => {
     cards[i].style.backgroundColor = '#2e3d49'
+    if (cards[i].classList.contains('open')) {
+      cards[i].style.backgroundColor = 'rgb(249, 241, 241)'
+    }
   })
-} */
+}
 
 let clicked = false
 let clickedArray = Array(16).fill(false)
@@ -369,6 +375,7 @@ let clickedTrueCount = 0
 
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
+    cards[i].style.backgroundColor = 'rgb(249, 241, 241)'
     count++
     if (gameOver) {
       return

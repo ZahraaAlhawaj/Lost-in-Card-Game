@@ -1,7 +1,5 @@
 # Lost-in-Card Game
 
-## Date: 18/1/2024
-
 ## By: Zahraa Alhawaj
 
 [GitHub](https://github.com/ZahraaAlhawaj) | [LinkedIn](https://www.linkedin.com/in/zahraa-alhawaj-9a74a8230)
