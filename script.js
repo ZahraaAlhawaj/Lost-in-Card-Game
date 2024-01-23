@@ -1,4 +1,4 @@
-let gameTime = 120
+let gameTime = 30
 let count = 0
 let countOpenCard = 0
 let score = 0
@@ -8,6 +8,10 @@ let gameOver = false
 
 const qOne = document.querySelectorAll('.qOne')
 const aOne = document.querySelectorAll('.aOne')
+
+const qTwo = document.querySelectorAll('.qTwo')
+const aTwo = document.querySelectorAll('.aTwo')
+
 const finalAnswer = document.querySelectorAll('.ansOne')
 const cards = document.querySelectorAll('.cards')
 const cardsText = document.querySelectorAll('.text')
@@ -265,13 +269,12 @@ const matching = (opencards, openCardStyle, matchingCards) => {
       openCardStyle = []
       matchingCards = []
 
-      //here the time should return to 120 sec
-      gameTime = 120
+      //here the time should return to 30 sec
+      gameTime = 30
       time.innerText = gameTime
       clearInterval(timer)
       startTimer = false
       startTime()
-      //cards[i].style.opacity = 0
     }
   }
 }
