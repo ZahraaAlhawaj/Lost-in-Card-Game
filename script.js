@@ -1,3 +1,4 @@
+//global variable
 let gameTime = 30
 let countOpenCard = 0
 let score = 0
@@ -31,9 +32,10 @@ const cardsText = document.querySelectorAll('.text')
 const scoreDisplay = document.querySelector('#score')
 const level = document.querySelector('#level')
 const time = document.querySelector('#time')
-const gameStatus = document.querySelector('#gameStatus')
+const gameStatusLost = document.querySelector('#gameStatusLost')
 const gameStatusWin = document.querySelector('#gameStatusWin')
 
+//Data
 const questionsAndAnswers = [
   {
     qsnOne: "The answer's color is equal to the text of: ",
@@ -133,6 +135,7 @@ const questionsAndAnswers = [
   }
 ]
 
+//display the data (questions and answers) in the card randomly
 for (let i = 0; i < cards.length; i++) {
   if (Math.random() < 0.5 && questionCount < 8) {
     //question
@@ -176,18 +179,22 @@ for (let i = 0; i < cards.length; i++) {
 
 //functions
 
+//close card function
 const closeCard = (i) => {
-  //for (let i = 0; i < cards.length; i++) {
   cards[i].classList.remove('open')
   cards[i].style.backgroundColor = '#9a073c'
   opencards = []
   matchingCards = []
   openACardStyle = []
   openQCardStyle = []
-  //}
   countOpenCard = 0
 }
 
+//open card function
+/**
+ * first it will check if there are more than 2 opened cards then it will close all cards
+ * second if there is only 2 opened cards, then it will pass to matching function to check if there are match or not
+ */
 const openCard = (i) => {
   cards[i].classList.add('open')
   if (countOpenCard === 2) {
@@ -197,7 +204,6 @@ const openCard = (i) => {
       opencards = []
       openACardStyle = []
       openQCardStyle = []
-
       matchingCards = []
     }
     countOpenCard = 0
@@ -256,6 +262,11 @@ const openCard = (i) => {
   }
 }
 
+//matching function that will check if the 2 cards matched or not
+/**
+ * if the 2 cards matches then, they will remove and the score will increase and time will return to 30sec
+ * if not matches then, then all cards will closed
+ */
 const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
   for (let i = 0; i < questionsAndAnswers.length; i++) {
     if (
@@ -297,11 +308,22 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
       startTimer = false
       startTime()
     } else {
-      console.log('does not match')
+      setTimeout(() => {
+        for (let i = 0; i < cards.length; i++) {
+          cards[i].classList.remove('open')
+          cards[i].style.backgroundColor = '#9a073c'
+          opencards = []
+          openACardStyle = []
+          openQCardStyle = []
+          matchingCards = []
+        }
+        countOpenCard = 0
+      }, 800)
     }
   }
 }
 
+//remove cards function. It will remove the cards if 2 cards matches and when all cards removed will show winner display
 const removeCards = () => {
   matchingCards[0].remove()
   matchingCards[1].remove()
@@ -313,21 +335,20 @@ const removeCards = () => {
   }
 }
 
+//start time function
 const startTime = () => {
   if (startTimer == false) {
     timer = setInterval(countdown, 1000)
     startTimer = true
-  } else {
-    console.log('already timer is start')
   }
 }
 
+//countdown function. It will decrease the time and it will check if the time reach 0, it will display loser display
 const countdown = () => {
   if (gameTime == 0) {
     time.innerText = gameTime
-    console.log('Game over')
     clearInterval(timer)
-    gameStatus.style.display = 'flex'
+    gameStatusLost.style.display = 'flex'
     gameOver = true
   } else {
     time.innerText = gameTime
@@ -337,6 +358,7 @@ const countdown = () => {
 
 //addEventListener
 
+//click event listener will listen for clicking on the card
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
     cards[i].style.backgroundColor = '#f9ecec'

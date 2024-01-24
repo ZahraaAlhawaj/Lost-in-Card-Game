@@ -83,7 +83,7 @@ h3 {
 #gameStatus {
   width: 47%;
   height: 40%;
-  background-color: #c2a308e8;
+  background-color: #c2a308c1;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -151,6 +151,26 @@ p {
 
   font-size: 50px;
   box-shadow: 0 2px 4px rgba(71, 70, 70, 0.2);
+}
+
+#gameStatusLost {
+  width: 47%;
+  height: 40%;
+  background-color: #c2a308e8;
+  text-align: center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  font-size: 50px;
 }
 
 #start {
