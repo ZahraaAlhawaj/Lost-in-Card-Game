@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;800&display=swap');
+
 body {
   margin: 0;
   padding: 0;
+  background-color: #e1e0e0;
 }
 
 section {
@@ -10,6 +13,10 @@ section {
 
 h1 {
   text-align: center;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 35px;
+  margin: 16px 0;
+  color: #0b245b;
 }
 
 main {
@@ -27,13 +34,18 @@ main {
 }
 .card {
   margin: 10px;
-  background-color: #2e3d49;
+  background-color: #9a073c;
   font-size: 0;
-  width: 110px;
+  width: 200px;
   height: 110px;
-  border: 1px solid black;
+  padding: 0 5px;
+
   border-radius: 15px;
   opacity: 1;
+  box-shadow: 0 2px 4px rgba(71, 70, 70, 0.2);
+
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+
   /*position: relative;
   transition: all 0.8s ease;
   transform-style: preserve-3d;*/
@@ -56,12 +68,17 @@ main {
 
 .open {
   transform: rotateY(0);
-  background-color: rgb(249, 241, 241);
-  font-size: 12px;
+  background-color: #f9ecec;
+  font-size: 15px;
 }
 
 h3 {
   text-align: center;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  color: #c2a308;
+  font-weight: bold;
+  margin: 0;
+  height: 40px;
 }
 
 #gameStatus {
@@ -97,4 +114,26 @@ h3 {
 
 .qTwo {
   display: inline-block;
+}
+
+footer {
+  height: 50px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+#sign {
+  /*bottom: 0;*/
+  font-size: 14px;
+  color: #0b245b;
+  font-weight: 500;
+}
+
+.aOne,
+.aTwo,
+.ansOne {
+  font-weight: bold;
 }
