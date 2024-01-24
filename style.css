@@ -45,25 +45,6 @@ main {
   box-shadow: 0 2px 4px rgba(71, 70, 70, 0.2);
 
   font-family: 'M PLUS Rounded 1c', sans-serif;
-
-  /*position: relative;
-  transition: all 0.8s ease;
-  transform-style: preserve-3d;*/
-}
-
-.front {
-  position: absolute;
-  backface-visibility: hidden;
-}
-
-.back {
-  position: absolute;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-}
-
-.flipCard {
-  transform: rotateY(180deg);
 }
 
 .open {
@@ -191,7 +172,6 @@ footer {
 }
 
 #sign {
-  /*bottom: 0;*/
   font-size: 14px;
   color: #0b245b;
   font-weight: 500;

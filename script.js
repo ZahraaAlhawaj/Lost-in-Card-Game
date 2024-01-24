@@ -179,15 +179,20 @@ for (let i = 0; i < cards.length; i++) {
 
 //functions
 
-//close card function
-const closeCard = (i) => {
-  cards[i].classList.remove('open')
-  cards[i].style.backgroundColor = '#9a073c'
+//reset array
+const resetArray = () => {
   opencards = []
   matchingCards = []
   openACardStyle = []
   openQCardStyle = []
+}
+//close card function
+const closeCard = (i) => {
+  cards[i].classList.remove('open')
+  cards[i].style.backgroundColor = '#9a073c'
+  resetArray()
   countOpenCard = 0
+  clickedTrueCount = 0
 }
 
 //open card function
@@ -196,15 +201,16 @@ const closeCard = (i) => {
  * second if there is only 2 opened cards, then it will pass to matching function to check if there are match or not
  */
 const openCard = (i) => {
+  cards[i].classList.remove('open')
   cards[i].classList.add('open')
+
   if (countOpenCard === 2) {
     for (let i = 0; i < cards.length; i++) {
       cards[i].classList.remove('open')
       cards[i].style.backgroundColor = '#9a073c'
-      opencards = []
-      openACardStyle = []
-      openQCardStyle = []
-      matchingCards = []
+      resetArray()
+      //not sure
+      clickedArray[i] = false
     }
     countOpenCard = 0
   } else {
@@ -296,10 +302,11 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
 
       setTimeout(removeCards, 500)
 
-      opencards = []
+      /* opencards = []
       openACardStyle = []
       openQCardStyle = []
-      matchingCards = []
+      matchingCards = [] */
+      countOpenCard = 0
 
       //here the time should return to 30 sec
       gameTime = 30
@@ -312,10 +319,9 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
         for (let i = 0; i < cards.length; i++) {
           cards[i].classList.remove('open')
           cards[i].style.backgroundColor = '#9a073c'
-          opencards = []
-          openACardStyle = []
-          openQCardStyle = []
-          matchingCards = []
+          resetArray()
+          clickedArray[i] = false
+          clickedTrueCount = 0
         }
         countOpenCard = 0
       }, 800)
@@ -328,6 +334,11 @@ const removeCards = () => {
   matchingCards[0].remove()
   matchingCards[1].remove()
   numberMatchCards++
+  clickedTrueCount = 0
+  for (let i = 0; i < clickedArray.length; i++) {
+    clickedArray[i] = false
+  }
+  resetArray()
 
   if (numberMatchCards == 8) {
     clearInterval(timer)
@@ -366,18 +377,20 @@ for (let i = 0; i < cards.length; i++) {
     if (gameOver) {
       return
     }
+
     startTime()
 
     if (clickedArray[i] == true) {
       clickedArray[i] = false
       closeCard(i)
+      // clickedTrueCount = 0
     } else {
       for (let j = 0; j < clickedArray.length; j++) {
         if (clickedArray[j] == true) {
           clickedTrueCount++
         }
       }
-      if (clickedTrueCount == 3 || clickedTrueCount > 3) {
+      if (clickedTrueCount >= 3) {
         for (let k = 0; k < cards.length; k++) {
           closeCard(k)
           clickedArray[k] = false
@@ -391,39 +404,18 @@ for (let i = 0; i < cards.length; i++) {
   })
 }
 
-/* for (let i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('mouseover', function () {
-    //cards[i].style.backgroundColor = 'black'
-    if (cards[i].classList.contains('open')) {
-      cards[i].style.backgroundColor = 'rgb(249, 241, 241)'
-    } else {
-      cards[i].style.backgroundColor = 'black'
-    }
-  })
-}
-
+//mouseover event listener. When the mouse hover any card it will change its background color
 for (let i = 0; i < cards.length; i++) {
+  cards[i].addEventListener('mouseover', function () {
+    if (!cards[i].classList.contains('open')) {
+      this.style.backgroundColor = '#540422'
+    }
+  })
+
+  //mouseout event listener. When the mouse out of any card it will change its background color
   cards[i].addEventListener('mouseout', function () {
-    //cards[i].style.backgroundColor = '#2e3d49'
-    if (cards[i].classList.contains('open')) {
-      cards[i].style.backgroundColor = 'rgb(249, 241, 241)'
-    } else {
-      cards[i].style.backgroundColor = '#2e3d49'
+    if (!cards[i].classList.contains('open')) {
+      this.style.backgroundColor = '#9a073c'
     }
   })
 }
- */
-
-/* for (let i = 0; i < cards.length; i++) {
-  cards[i].addEventListener('mouseover', function () {
-    if (!cards[i].classList.contains('open')) {
-      this.style.backgroundColor = '#000000'
-    }
-  })
-
-  cards[i].addEventListener('mouseout', function () {
-    if (!cards[i].classList.contains('open')) {
-      this.style.backgroundColor = '#2e3d49'
-    }
-  })
-} */
