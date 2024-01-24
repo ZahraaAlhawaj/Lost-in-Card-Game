@@ -1,4 +1,4 @@
-let gameTime = 60
+let gameTime = 30
 let countOpenCard = 0
 let score = 0
 let startTimer = false
@@ -290,8 +290,8 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
       openQCardStyle = []
       matchingCards = []
 
-      //here the time should return to 60 sec
-      gameTime = 60
+      //here the time should return to 30 sec
+      gameTime = 30
       time.innerText = gameTime
       clearInterval(timer)
       startTimer = false
@@ -309,7 +309,7 @@ const removeCards = () => {
 
   if (numberMatchCards == 8) {
     clearInterval(timer)
-    gameStatusWin.style.display = 'block'
+    gameStatusWin.style.display = 'flex'
   }
 }
 
@@ -327,7 +327,7 @@ const countdown = () => {
     time.innerText = gameTime
     console.log('Game over')
     clearInterval(timer)
-    gameStatus.style.display = 'block'
+    gameStatus.style.display = 'flex'
     gameOver = true
   } else {
     time.innerText = gameTime
