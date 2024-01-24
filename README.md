@@ -10,7 +10,7 @@
 
 ### 🔗 **Live Link:**
 
-#### Click the following link to be redirected to the live version of the code. Prepare your eyes and mind! Lost-in-Card
+#### Click the following link to be redirected to the live version of the code. Prepare your eyes and mind! [Lost-in-Card](https://nice-gun.surge.sh/)
 
 ---
 

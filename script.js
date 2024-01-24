@@ -302,10 +302,6 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
 
       setTimeout(removeCards, 500)
 
-      /* opencards = []
-      openACardStyle = []
-      openQCardStyle = []
-      matchingCards = [] */
       countOpenCard = 0
 
       //here the time should return to 30 sec
@@ -383,7 +379,6 @@ for (let i = 0; i < cards.length; i++) {
     if (clickedArray[i] == true) {
       clickedArray[i] = false
       closeCard(i)
-      // clickedTrueCount = 0
     } else {
       for (let j = 0; j < clickedArray.length; j++) {
         if (clickedArray[j] == true) {
