@@ -320,7 +320,7 @@ const matching = (opencards, openQCardStyle, openACardStyle, matchingCards) => {
           clickedTrueCount = 0
         }
         countOpenCard = 0
-      }, 800)
+      }, 2000)
     }
   }
 }
