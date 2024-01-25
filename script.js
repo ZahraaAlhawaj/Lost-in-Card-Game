@@ -368,11 +368,10 @@ const countdown = () => {
 //click event listener will listen for clicking on the card
 for (let i = 0; i < cards.length; i++) {
   cards[i].addEventListener('click', () => {
-    cards[i].style.backgroundColor = '#f9ecec'
-
     if (gameOver) {
       return
     }
+    cards[i].style.backgroundColor = '#f9ecec'
 
     startTime()
 
